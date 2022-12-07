@@ -11,12 +11,12 @@ public class Supplier : MonoBehaviour
     [SerializeField] private int _maxCapacity = 5;
     
     private Vector3 boxDistances = new Vector3(0, 0.4f, 0);
-    private ObjectPool<Supply> _pool;
+    public static ObjectPool<Supply> Pool;
     
     public Stack<Supply> Stock = new Stack<Supply>();
     void Start()
     {
-        _pool = new ObjectPool<Supply>(() =>
+        Pool = new ObjectPool<Supply>(() =>
         {
             return Instantiate(_supplyPrefab);
         }, supply =>
@@ -38,7 +38,7 @@ public class Supplier : MonoBehaviour
         while (true)
         {
             yield return new WaitUntil(() => Stock.Count < _maxCapacity);
-            var stock = _pool.Get();
+            var stock = Pool.Get();
             Stock.Push(stock);
             yield return new WaitForSeconds(supplyRate);
         }

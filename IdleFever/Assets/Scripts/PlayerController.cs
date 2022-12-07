@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour
     }
     private void AnimationController()
     {
-
         if (_input.sqrMagnitude > 0)
         {
             _animator.SetFloat(movementHash, 1);
